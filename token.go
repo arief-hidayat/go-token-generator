@@ -118,9 +118,6 @@ func (t *CustomToken) GenerateUrlFromViewerAttributes(endpointUrl url.URL, keyId
 			}
 		}
 		claims["intsig"] = encodedSign
-
-		log.Println(base64.URLEncoding.EncodeToString(intSignSign))
-		//claims["intsig"] = string(intSignSign)
 	}
 	token, err := t.GenerateTokenWithClaims(keyId, claims)
 	if err != nil {
