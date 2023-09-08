@@ -1,9 +1,8 @@
 package go_token_generator
 
 import (
-	"encoding/base64"
 	"fmt"
-	"github.com/golang-jwt/jwt/v5"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/segmentio/ksuid"
 	"log"
 	"net/url"
@@ -109,15 +108,7 @@ func (t *CustomToken) GenerateUrlFromViewerAttributes(endpointUrl url.URL, keyId
 		if err != nil {
 			return intsigInput, err
 		}
-		encodedSign := base64.URLEncoding.EncodeToString(intSignSign)
-		// remove trailing equals sign
-		for i := len(encodedSign) - 1; i >= 0; i-- {
-			if encodedSign[i] != '=' {
-				encodedSign = encodedSign[0 : i+1]
-				break
-			}
-		}
-		claims["intsig"] = encodedSign
+		claims["intsig"] = intSignSign
 	}
 	token, err := t.GenerateTokenWithClaims(keyId, claims)
 	if err != nil {
